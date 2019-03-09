@@ -13,27 +13,6 @@ public class AppController : MonoBehaviour
 
 
     void Awake(){
-        
-        /*if (FB.IsInitialized) {
-            tt.text += "qwertbn"+2+"\n\r";
-            FB.ActivateApp();
-            FB.Mobile.SetAutoLogAppEventsEnabled(true); 
-            LogIAmWorkingEvent(true);
-        } 
-        else {
-            //Handle FB.Init
-            tt.text += "qwertbn"+3+"\n\r";
-            FB.Init( () => {
-                FB.ActivateApp();
-
-                var perms = new List<string>(){"public_profile", "email"};
-                FB.LogInWithReadPermissions(perms, AuthCallback);
-
-                FB.Mobile.SetAutoLogAppEventsEnabled(true); 
-                LogIAmWorkingEvent(true);
-                tt.text += "qwertbn"+4+"\n\r";
-            });
-        }*/
 
         if (!FB.IsInitialized) {
             FB.Init(InitCallback, OnHideUnity);
@@ -42,7 +21,6 @@ public class AppController : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
 
@@ -75,40 +53,10 @@ public class AppController : MonoBehaviour
         webView.Show();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     IEnumerator appFlyerCor() {
         yield return new WaitForSeconds(1f);
         AppsFlyer.trackRichEvent ("I_am_working", null);
             
-    }
-
-    public void showSite(){
-        /* WebViewer.OnLoadComplete += OnLoadComplete;
-
-        WebViewer.InsetsForScreenOreitation += InsetsForScreenOreitation;
-        WebViewer.toolBarShow = true;
-
-        // Now, we could set the url and load the page.
-        WebViewer.url = "https://google.com";
-        WebViewer.Load();*/
-        
-    }
-
-    public void aaa(){
-        tt.text += " bbb ";
-
-        AppsFlyer.trackRichEvent ("af_login", null);
-        
-
-        Dictionary<string, string> LevelAchievedEvent = new Dictionary<string, string>();
-        LevelAchievedEvent.Add("af_level", "10");
-        LevelAchievedEvent.Add("af_score", "500");
-        AppsFlyer.trackRichEvent ("af_level_achieved", LevelAchievedEvent);
     }
 
     private static void HandleNotificationOpened(OSNotificationOpenedResult result) {
@@ -141,13 +89,7 @@ public class AppController : MonoBehaviour
     private void InitCallback ()
     {
         if (FB.IsInitialized) {
-            // Signal an app activation App Event
-            FB.ActivateApp();
-            // Continue with Facebook SDK
-            // ...
-            //tt.text += "q";
-
-            
+            FB.ActivateApp();            
 
             FB.Mobile.SetAutoLogAppEventsEnabled(true); 
             LogIAmWorkingEvent(true);
@@ -156,10 +98,6 @@ public class AppController : MonoBehaviour
             FB.LogInWithReadPermissions(perms, AuthCallback);*/
 
             tt.text += "dasf";
-
-            /*FB.Mobile.FetchDeferredAppLinkData(DeepLinkCallback);
-
-            FB.GetAppLink(DeepLinkCallback);*/
 
             FB.Mobile.FetchDeferredAppLinkData(DeepLinkCallback);
 
@@ -178,26 +116,7 @@ public class AppController : MonoBehaviour
             webView.Load("https://google.ru/");
             webView.Show();
         }
-        /*tt.text += "-DD-";        
-        
-        if(result.Extras != null){
-            tt.text += "|"+result.Extras.Count+"|";
-
-            foreach (var item in result.Extras)
-            {
-                tt.text += item.Key;
-                tt.text += item.Value;
-            }
-        }*/
-
-    }
-
-    /*void DeepLinkCallback(IAppLinkResult result) {
-        if(!string.IsNullOrEmpty(result.Url)) {
-            
-        }
-    }*/
-    
+    }    
 
     public void LogIAmWorkingEvent (bool val) {
         var parameters = new Dictionary<string, object>();
@@ -206,16 +125,13 @@ public class AppController : MonoBehaviour
             "I am working",
             parameters: parameters
         );
-        //tt.text += "2";
     }
 
     private void OnHideUnity (bool isGameShown)
     {
         if (!isGameShown) {
-            // Pause the game - we will need to hide
             Time.timeScale = 0;
         } else {
-            // Resume the game - we're getting focus again
             Time.timeScale = 1;
         }
     }
