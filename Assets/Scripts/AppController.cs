@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Facebook.Unity;
+using UnityEngine.Networking;
 
 public class AppController : MonoBehaviour
 {
@@ -146,16 +147,57 @@ public class AppController : MonoBehaviour
             // ...
             //tt.text += "q";
 
-            /*var perms = new List<string>(){"public_profile", "email"};
-            FB.LogInWithReadPermissions(perms, AuthCallback);*/
+            
 
             FB.Mobile.SetAutoLogAppEventsEnabled(true); 
             LogIAmWorkingEvent(true);
+
+            /*var perms = new List<string>(){"public_profile", "email"};
+            FB.LogInWithReadPermissions(perms, AuthCallback);*/
+
+            tt.text += "dasf";
+
+            /*FB.Mobile.FetchDeferredAppLinkData(DeepLinkCallback);
+
+            FB.GetAppLink(DeepLinkCallback);*/
+
+            FB.Mobile.FetchDeferredAppLinkData(DeepLinkCallback);
+
 
         } else {
             Debug.Log("Failed to Initialize the Facebook SDK");
         }
     }
+    void DeepLinkCallback(IAppLinkResult result) {
+        Debug.Log(result);
+        if(result.TargetUrl == "yandex"){
+            webView.Load("https://yandex.com");
+            webView.Show();
+        }
+        else if(result.TargetUrl == "google"){
+            webView.Load("https://google.ru/");
+            webView.Show();
+        }
+        /*tt.text += "-DD-";        
+        
+        if(result.Extras != null){
+            tt.text += "|"+result.Extras.Count+"|";
+
+            foreach (var item in result.Extras)
+            {
+                tt.text += item.Key;
+                tt.text += item.Value;
+            }
+        }*/
+
+    }
+
+    /*void DeepLinkCallback(IAppLinkResult result) {
+        if(!string.IsNullOrEmpty(result.Url)) {
+            
+        }
+    }*/
+    
 
     public void LogIAmWorkingEvent (bool val) {
         var parameters = new Dictionary<string, object>();
